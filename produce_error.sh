@@ -1,6 +1,6 @@
 #!/bin/bash
 # Command run by intellij plugin
-# The argument "--output_groups" leads to an error
+# The argument "--aspects" leads to an error
 # Error: type 'depset' has no operator [](int)
 bazel build \
     --verbose_failures \

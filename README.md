@@ -19,5 +19,5 @@ ERROR: /private/var/tmp/_bazel_niklassemmler/70641108bc357a5c1cd378cfa96874dc/ex
 The offending argument is:
 
 ```
-    --output_groups=intellij-resolve-java-direct-deps,intellij-info-generic,intellij-info-java-direct-deps \
+    --aspects=@@intellij_aspect//:intellij_info_bundled.bzl%intellij_info_aspect "--override_repository=intellij_aspect=/Users/niklassemmler/Library/Application Support/JetBrains/IdeaIC2022.3/plugins/ijwb/aspect"
 ```

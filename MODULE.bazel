@@ -41,13 +41,7 @@ maven.install(
         "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:%s" % JACKSON_VERSION,
         "com.fasterxml.jackson.core:jackson-databind:%s" % JACKSON_VERSION,
     ],
-    lock_file = "//:maven_install.json",
-)
-maven.install(
-    artifacts = [
-        "org.junit.jupiter:junit-jupiter:5.10.2",
-    ],
-    lock_file = "//:maven_install.json",
+    lock_file = "//proj:maven_install.json",
 )
 use_repo(maven, "maven", "unpinned_maven")
 

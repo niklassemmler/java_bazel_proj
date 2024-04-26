@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 6,
-  "moduleFileHash": "67ab415acf69dcdf1b3186d8a7a94b227f82ae027dbd7979b7c7a8c185c3e03e",
+  "moduleFileHash": "787489217a5311dd19a719117e7c29cd44c9db529de7e2fb0f02bca311d03dc3",
   "flags": {
     "cmdRegistries": [
       "https://bcr.bazel.build/"
@@ -108,27 +108,12 @@
                   "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.16.2",
                   "com.fasterxml.jackson.core:jackson-databind:2.16.2"
                 ],
-                "lock_file": "//:maven_install.json"
+                "lock_file": "//proj:maven_install.json"
               },
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
                 "line": 32,
-                "column": 14
-              }
-            },
-            {
-              "tagName": "install",
-              "attributeValues": {
-                "artifacts": [
-                  "org.junit.jupiter:junit-jupiter:5.10.2"
-                ],
-                "lock_file": "//:maven_install.json"
-              },
-              "devDependency": false,
-              "location": {
-                "file": "@@//:MODULE.bazel",
-                "line": 46,
                 "column": 14
               }
             }
@@ -142,7 +127,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 54,
+            "line": 48,
             "column": 20
           },
           "imports": {
@@ -164,7 +149,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 55,
+                "line": 49,
                 "column": 9
               }
             }
@@ -4651,8 +4636,8 @@
       "general": {
         "bzlTransitiveDigest": "WLH6tV/jGiZ73lPBSYWRhoilLeqSLs6vQqjK4ph6NG0=",
         "recordedFileInputs": {
-          "@@rules_jvm_external~//rules_jvm_external_deps_install.json": "cafb5d2d8119391eb2b322ce3840d3352ea82d496bdb8cbd4b6779ec4d044dda",
-          "@@//maven_install.json": "3d8a911243bdc2010f50e2cc0dfc6a766107a7e807348051177e6b0cd5bd96d1"
+          "@@//proj/maven_install.json": "3d8a911243bdc2010f50e2cc0dfc6a766107a7e807348051177e6b0cd5bd96d1",
+          "@@rules_jvm_external~//rules_jvm_external_deps_install.json": "cafb5d2d8119391eb2b322ce3840d3352ea82d496bdb8cbd4b6779ec4d044dda"
         },
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -5071,7 +5056,6 @@
                 "{ \"group\": \"org.apache.logging.log4j\", \"artifact\": \"log4j-core\", \"version\": \"2.23.1\" }",
                 "{ \"group\": \"com.fasterxml.jackson.dataformat\", \"artifact\": \"jackson-dataformat-yaml\", \"version\": \"2.16.2\" }",
                 "{ \"group\": \"com.fasterxml.jackson.core\", \"artifact\": \"jackson-databind\", \"version\": \"2.16.2\" }",
-                "{ \"group\": \"org.junit.jupiter\", \"artifact\": \"junit-jupiter\", \"version\": \"5.10.2\" }",
                 "{ \"group\": \"com.google.code.findbugs\", \"artifact\": \"jsr305\", \"version\": \"3.0.2\" }",
                 "{ \"group\": \"com.google.code.gson\", \"artifact\": \"gson\", \"version\": \"2.8.9\" }",
                 "{ \"group\": \"com.google.errorprone\", \"artifact\": \"error_prone_annotations\", \"version\": \"2.3.2\" }",
@@ -5093,7 +5077,7 @@
               "strict_visibility_value": [
                 "@@//visibility:private"
               ],
-              "maven_install_json": "@@//:maven_install.json",
+              "maven_install_json": "@@//proj:maven_install.json",
               "resolve_timeout": 600,
               "use_starlark_android_rules": false,
               "aar_import_bzl_label": "@build_bazel_rules_android//android:rules.bzl",
@@ -6622,7 +6606,6 @@
                 "{ \"group\": \"org.apache.logging.log4j\", \"artifact\": \"log4j-core\", \"version\": \"2.23.1\" }",
                 "{ \"group\": \"com.fasterxml.jackson.dataformat\", \"artifact\": \"jackson-dataformat-yaml\", \"version\": \"2.16.2\" }",
                 "{ \"group\": \"com.fasterxml.jackson.core\", \"artifact\": \"jackson-databind\", \"version\": \"2.16.2\" }",
-                "{ \"group\": \"org.junit.jupiter\", \"artifact\": \"junit-jupiter\", \"version\": \"5.10.2\" }",
                 "{ \"group\": \"com.google.code.findbugs\", \"artifact\": \"jsr305\", \"version\": \"3.0.2\" }",
                 "{ \"group\": \"com.google.code.gson\", \"artifact\": \"gson\", \"version\": \"2.8.9\" }",
                 "{ \"group\": \"com.google.errorprone\", \"artifact\": \"error_prone_annotations\", \"version\": \"2.3.2\" }",
@@ -6636,7 +6619,7 @@
               "fetch_sources": false,
               "fetch_javadoc": false,
               "generate_compat_repositories": false,
-              "maven_install_json": "@@//:maven_install.json",
+              "maven_install_json": "@@//proj:maven_install.json",
               "override_targets": {},
               "strict_visibility": false,
               "strict_visibility_value": [

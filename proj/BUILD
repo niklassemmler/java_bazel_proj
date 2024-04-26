@@ -50,7 +50,7 @@ oci_image(
     entrypoint = [
         "java",
         "-jar",
-        "/Main_deploy.jar",
+        "/proj/Main_deploy.jar",
     ],
     tars = [":layer"],
 )

@@ -1,16 +1,25 @@
+load("@aspect_bazel_lib//lib:tar.bzl", "tar")
+load("@container_structure_test//:defs.bzl", "container_structure_test")
+load("@contrib_rules_jvm//java:defs.bzl", "java_binary", "java_junit5_test", "java_library", "java_test_suite")
 load("@rules_jvm_external//:defs.bzl", "artifact")
-load("@contrib_rules_jvm//java:defs.bzl", "java_test_suite", "java_junit5_test")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_push", "oci_tarball")
 
 java_binary(
     name = "Main",
     main_class = "com.test.Main",
-    srcs = glob(["src/main/java/**/*.java"]),
-    deps = [artifact("org.junit.jupiter:junit-jupiter-api")],
+    runtime_deps = [":lib"],
 )
 
 java_library(
-    name = "junit5-jupiter-starter-bazel",
+    name = "lib",
     srcs = glob(["src/main/java/**/*.java"]),
+    resources = glob(["src/main/resources/**/*"]),
+    deps = [
+        artifact("org.apache.logging.log4j:log4j-api"),
+        artifact("org.apache.logging.log4j:log4j-core"),
+        artifact("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml"),
+        artifact("com.fasterxml.jackson.core:jackson-databind"),
+    ],
 )
 
 java_test_suite(
@@ -23,9 +32,45 @@ java_test_suite(
         artifact("org.junit.jupiter:junit-jupiter-engine"),
     ],
     deps = [
-        ":junit5-jupiter-starter-bazel",
+        ":lib",
         artifact("org.junit.jupiter:junit-jupiter-api"),
         artifact("org.junit.platform:junit-platform-launcher"),
         artifact("org.junit.platform:junit-platform-reporting"),
     ],
+)
+
+tar(
+    name = "layer",
+    srcs = ["Main_deploy.jar"],
+)
+
+oci_image(
+    name = "image",
+    base = "@distroless_java",
+    entrypoint = [
+        "java",
+        "-jar",
+        "/Main_deploy.jar",
+    ],
+    tars = [":layer"],
+)
+
+oci_tarball(
+    name = "image_tarball",
+    image = ":image",
+    repo_tags = ["nsemmler/app:v0.0.1"],
+)
+
+oci_push(
+    name = "push",
+    image = ":image_tarball",
+    remote_tags = ["v0.0.1"],
+    repository = "nsemmler/app",
+)
+
+container_structure_test(
+    name = "container_test",
+    configs = ["container_test.yaml"],
+    image = ":image",
+    tags = ["requires-docker"],
 )

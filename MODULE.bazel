@@ -1,10 +1,33 @@
 bazel_dep(name = "rules_jvm_external", version = "6.0")
 bazel_dep(name = "contrib_rules_jvm", version = "0.24.0")
+bazel_dep(name = "apple_rules_lint", version = "0.3.2")
+bazel_dep(name = "aspect_bazel_lib", version = "2.7.1")
+bazel_dep(name = "rules_oci", version = "1.7.5")
+bazel_dep(name = "container_structure_test", version = "1.16.0")
+
+linter = use_extension("@apple_rules_lint//lint:extensions.bzl", "linter")
+linter.configure(
+    name = "java-checkstyle",
+    config = "@contrib_rules_jvm//java:checkstyle-default-config",
+)
+linter.configure(
+    name = "java-pmd",
+    config = "@contrib_rules_jvm//java:pmd-config",
+)
+linter.configure(
+    name = "java-spotbugs",
+    config = "@contrib_rules_jvm//java:spotbugs-default-config",
+)
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 
 JUNIT_JUPITER_VERSION = "5.10.2"
+
 JUNIT_PLATFORM_VERSION = "1.10.2"
+
+LOG4J2_VERSION = "2.23.1"
+
+JACKSON_VERSION = "2.16.2"
 
 maven.install(
     artifacts = [
@@ -13,10 +36,13 @@ maven.install(
         "org.junit.jupiter:junit-jupiter-api:%s" % JUNIT_JUPITER_VERSION,
         "org.junit.jupiter:junit-jupiter-params:%s" % JUNIT_JUPITER_VERSION,
         "org.junit.jupiter:junit-jupiter-engine:%s" % JUNIT_JUPITER_VERSION,
+        "org.apache.logging.log4j:log4j-api:%s" % LOG4J2_VERSION,
+        "org.apache.logging.log4j:log4j-core:%s" % LOG4J2_VERSION,
+        "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:%s" % JACKSON_VERSION,
+        "com.fasterxml.jackson.core:jackson-databind:%s" % JACKSON_VERSION,
     ],
     lock_file = "//:maven_install.json",
 )
-
 maven.install(
     artifacts = [
         "org.junit.jupiter:junit-jupiter:5.10.2",
@@ -24,3 +50,15 @@ maven.install(
     lock_file = "//:maven_install.json",
 )
 use_repo(maven, "maven", "unpinned_maven")
+
+oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
+oci.pull(
+    name = "distroless_java",
+    image = "gcr.io/distroless/java11-debian11",
+    platforms = [
+        "linux/amd64",
+        "linux/arm64/v8",
+    ],
+    tag = "latest",
+)
+use_repo(oci, "distroless_java")

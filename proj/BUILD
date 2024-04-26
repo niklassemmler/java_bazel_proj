@@ -5,7 +5,7 @@ load("@rules_jvm_external//:defs.bzl", "artifact")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_push", "oci_tarball")
 
 java_binary(
-    name = "Main",
+    name = "main",
     main_class = "com.test.Main",
     runtime_deps = [":lib"],
 )
@@ -23,7 +23,7 @@ java_library(
 )
 
 java_test_suite(
-    name = "Tests",
+    name = "tests",
     size = "small",
     srcs = glob(["src/test/java/**/*.java"]),
     runner = "junit5",
@@ -41,7 +41,7 @@ java_test_suite(
 
 tar(
     name = "layer",
-    srcs = ["Main_deploy.jar"],
+    srcs = ["main_deploy.jar"],
 )
 
 oci_image(
@@ -50,7 +50,7 @@ oci_image(
     entrypoint = [
         "java",
         "-jar",
-        "/proj/Main_deploy.jar",
+        "/proj/main_deploy.jar",
     ],
     tars = [":layer"],
 )
@@ -59,13 +59,6 @@ oci_tarball(
     name = "image_tarball",
     image = ":image",
     repo_tags = ["nsemmler/app:v0.0.1"],
-)
-
-oci_push(
-    name = "push",
-    image = ":image_tarball",
-    remote_tags = ["v0.0.1"],
-    repository = "nsemmler/app",
 )
 
 container_structure_test(
